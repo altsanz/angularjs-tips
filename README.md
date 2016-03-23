@@ -59,4 +59,59 @@ app.module('whatever').directive('my-directive', function() {
     
 ```
 
+# Mocking a factory and injecting it in a controllerAs 
 
+```javascript
+
+describe('Controller: myCtrl as vm', function() {
+  var myCtrl, scope;  // Declare here what you will use across the $provide and the tests
+
+  // Initialize the controller and scope
+  beforeEach(function() {
+    // Load the controller's module
+    module('myCtrlModule');
+
+    // Provide any mocks needed
+    module(function($provide) {
+      // Provide all the dependencies injected on controller
+      /*
+      $provide.value('dependency1', {});
+      */
+
+      // Provide myFactory mock
+      $provide.factory('myFactory', function($q) {  // Add $q as we will mock a promise response
+        return {
+          factoryMethod: jasmine.createSpy('factoryMethod').andCallFake(function(num) {
+            return $q.when({
+              "result": "this must be the result of your promise"
+            });
+          })
+        };
+      });
+      
+      // Add the rest of dependencies
+      $provide.value('dependencyN', {});
+    });
+
+
+    inject(function($controller, _dependency1_, _myFactory_, _dependencyN_) {
+      scope = {};
+      
+      // ADD dependencies to the controller
+      myCtrl = $controller('myCtrl as vm', {
+        $scope: scope,
+        dependency1: _dependency1_,
+        myFactory: _myFactory_,
+        dependencyN: _dependencyN_
+      });
+    });
+
+  });
+
+  it('should exist', function() {
+    expect(!!myCtrl).toBe(true);
+  });
+
+});
+
+```
