@@ -1,7 +1,9 @@
 # angular-tips
 Place where I put some of my angular tips, for my future me.
 
-# Two-way data binding on directives
+## Directives
+
+### Two-way data binding on directives
 
 ```html
   <my-directive value-binded="vm.variable"/>
@@ -25,7 +27,7 @@ app.module('whatever').directive('my-directive', function() {
     
 ```
 
-# Activate directive controller when two-way data binding is loaded
+### Activate directive controller when two-way data binding is loaded
 
 Sometimes we need to wait until data is available so we can operate inside directive. Just add a $watch that run once, and when valid data is available run the activate() method.
 
@@ -59,7 +61,14 @@ app.module('whatever').directive('my-directive', function() {
     
 ```
 
-# Mocking a factory and injecting it in a controllerAs 
+### Link vs Controller, inside a directive
+
+Link for only simple DOM manipulation and event handling.
+Controller when logic or templates are expected to be _not that simple_.
+
+## Testing
+
+### Mocking a factory and injecting it in a controllerAs 
 
 ```javascript
 
