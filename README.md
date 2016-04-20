@@ -3,6 +3,29 @@ Place where I put some of my angular tips, for my future me.
 
 ## Directives
 
+### Symbols in scope object
+
+1. "@"   (  Text binding / one-way binding )
+2. "="   ( Direct model binding / two-way binding )
+3. "&"   ( Behaviour binding / Method binding  )
+
+```js
+scope: {
+        name: "@",
+        color: "=",
+        reverse: "&"
+    }
+```
+
+```html
+<div my-directive
+  name="{{name}}"
+  reverse="reverseName()"
+  color="color" >
+</div>
+```
+
+
 ### Two-way data binding on directives
 
 ```html
