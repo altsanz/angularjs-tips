@@ -21,8 +21,38 @@ scope: {
 <div my-directive
   name="{{name}}"
   color="color"
-  reverse="reverseName()">
+  reverse="reverseName">
 </div>
+```
+
+### Using passed methods with params through scope on directives
+
+DONT DO: 
+```html
+<div my-directive
+  method="methodName(param1, param2)">
+</div>
+```
+
+As it forces you to use it the following way, which doesn't survive minification and is not DRY:
+```js
+controller: function(scope) {
+        scope.methodName({ param1: 'value1', param2: 'value2' });
+}
+```
+
+PLS DO:
+```html
+<div my-directive
+  method="methodName">
+</div>
+```
+
+And use it this way:
+```js
+controller: function(scope) {
+        scope.methodName()('value1', 'value2');
+}
 ```
 
 
@@ -36,7 +66,7 @@ scope: {
 
 app.module('whatever').directive('my-directive', function() {
         return {
-            restrict: 'E',
+            restrict: 'EA',
             scope: {
                 valueBinded: '=valueBinded' // THIS IS THE IMPORTANT PART
             },
