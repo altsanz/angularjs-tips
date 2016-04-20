@@ -20,8 +20,8 @@ scope: {
 ```html
 <div my-directive
   name="{{name}}"
-  reverse="reverseName()"
-  color="color" >
+  color="color"
+  reverse="reverseName()">
 </div>
 ```
 
