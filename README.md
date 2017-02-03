@@ -177,3 +177,61 @@ describe('Controller: myCtrl as vm', function() {
 });
 
 ```
+
+### Getting controller from a directive that is using controllerAs syntax
+
+When you have a directive created with a controller using controllerAs syntax, in order to test controller methods you should better keep reading.
+
+Directive created like this:
+```
+angular.module('whatever', []).directive('myDirective', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'components/myDirective/myDirective.tpl.html',
+    scope: true,
+    bindToController: {
+      demoValue1: '=',
+      demoValue2: '='
+    },
+    controllerAs: 'vm',
+    controller: 'MyDirectiveCtrl'
+  }
+})
+
+.controller('MyDirectiveCtrl', function($scope, $element, $attrs) {
+    var self = this;
+    
+    self.method1 = method1;
+    
+    function method1(example1, example2) {
+        [...]
+    }
+})
+```
+
+Then unit test like this:
+```
+describe('my-directive', function() {
+
+    var element, scope, ctrl;
+
+    beforeEach(function() {
+      angular.mock.module('bankai.components.counter');
+
+      angular.mock.inject(function($compile, $rootScope) {
+        scope = $rootScope;
+        element = angular.element('<my-directive ></my-directive>');
+        $compile(element)(scope);
+        scope.$digest();
+ 
+        ctrl = element.controller('myDirective');
+        
+      });
+    });
+
+    it('should have a controller', function() {
+      expect(ctrl).toBeDefined();
+    });
+
+  });
+
