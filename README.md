@@ -234,4 +234,14 @@ describe('my-directive', function() {
     });
 
   });
+```
 
+### Expecting backend not to have been requested
+
+When using httpBackend mock and expect it to not have been called, simply use the following line:
+
+```
+expect(httpBackend.flush).toThrow();
+```
+
+As no httpBackend call is used, there's nothing to flush, so it raises an error that we detect with Jasmine! 
