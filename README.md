@@ -216,7 +216,7 @@ describe('my-directive', function() {
     var element, scope, ctrl;
 
     beforeEach(function() {
-      angular.mock.module('bankai.components.counter');
+      angular.mock.module('my-module');
 
       angular.mock.inject(function($compile, $rootScope) {
         scope = $rootScope;
