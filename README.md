@@ -275,18 +275,18 @@ Then inject $httpProvider inside this custom config block and save reference, as
 ```
     
 describe('Component logger', function() {    
-    var $httpProvider;
+    var httpProvider;
     beforeEach(function() {
         angular.module('loggerConfig', [])
-        .config(function(_$httpProvider_) {
-            $httpProvider = _$httpProvider_; // Save reference
+        .config(function($httpProvider) { // Note that _$httpProvider_ notation doesnt work here
+            httpProvider = $httpProvider; // Save reference
         })
     })
     
     
     it('Check logger interceptor has been registered on config block', function() {
         // Now $httpProvider is available. We got you, bastard.
-        expect($httpProvider.interceptor.whatever).toBeTruthy();
+        expect(httpProvider.interceptor.whatever).toBeTruthy();
     });
 })
 ```
