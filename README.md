@@ -245,3 +245,52 @@ expect(httpBackend.flush).toThrow();
 ```
 
 As no httpBackend call is used, there's nothing to flush, so it raises an error that we detect with Jasmine! 
+
+### Unit testing config blocks
+
+Let's say you have a module that registers and http interceptor. And you wanna be sure that it is being registered during config block of that module.
+
+How you assert that $http.interceptors array has your brand new interceptor?
+
+In other words, how I make $httpProvider to be available inside 'it' unit test block?
+
+On beforeEach create new module with a name that doesn't collide with other modules you want to test.
+
+```
+beforeEach(function() {
+    angular.module('componentWithConfig', [])
+})
+```
+
+Then create a config block for this new module:
+
+```
+beforeEach(function() {
+    angular.module('componentWithConfig', [])
+}).config(function() {});
+```
+
+Then inject $httpProvider inside this custom config block and save reference, as we do for regular unit testing:
+
+```
+    
+describe('Component logger', function() {    
+    var $httpProvider;
+    beforeEach(function() {
+        angular.module('loggerConfig', [])
+        .config(function(_$httpProvider_) {
+            $httpProvider = _$httpProvider_; // Save reference
+        })
+    })
+    
+    
+    it('Check logger interceptor has been registered on config block', function() {
+        // Now $httpProvider is available. We got you, bastard.
+        expect($httpProvider.interceptor.whatever).toBeTruthy();
+    });
+})
+```
+
+
+
+
