@@ -292,5 +292,16 @@ describe('Component logger', function() {
 ```
 
 
+## AngularJS Internals
 
+### When is a digest cycle triggered?
 
+There are basically three possible cases when the state of an application can change and these are the only moments where $digest cycles are needed. The case are:
+
+- **User Interaction through events** - The user clicks UI controls like buttons and in turn triggers something in our application that changes state.
+
+- **XMLHttpRequests** - Also known as AJAX. Something in our app requests some data from a server and update model data accordingly.
+
+- **Timeouts** - Asynchronous operations cause through timers that can possibly change the state of our application
+
+Source: _https://blog.thoughtram.io/angularjs/2015/01/14/exploring-angular-1.3-speed-up-with-applyAsync.html_
