@@ -182,11 +182,11 @@ describe('Controller: myCtrl as vm', function() {
 
 ```
 
-### Getting controller from a directive that is using controllerAs syntax
+### Getting controller from a directive that is using controllerAs and BindToController syntax
 
-When you have a directive created with a controller using controllerAs syntax, in order to test controller methods you should better keep reading.
+When you have a directive created with a controller using controllerAs and BindToController syntax, in order to test controller methods you should better keep reading.
 
-Directive created like this:
+You have a directive created like this:
 ```
 angular.module('whatever', []).directive('myDirective', function () {
   return {
@@ -194,15 +194,15 @@ angular.module('whatever', []).directive('myDirective', function () {
     templateUrl: 'components/myDirective/myDirective.tpl.html',
     scope: true,
     bindToController: {
-      demoValue1: '=',
-      demoValue2: '='
+      demoValueOne: '=',
+      demoValueTwo: '='
     },
     controllerAs: 'vm',
     controller: 'MyDirectiveCtrl'
   }
 })
 
-.controller('MyDirectiveCtrl', function($scope, $element, $attrs) {
+.controller('MyDirectiveCtrl', function(myService, anotherService) {
     var self = this;
     
     self.method1 = method1;
@@ -213,7 +213,7 @@ angular.module('whatever', []).directive('myDirective', function () {
 })
 ```
 
-Then unit test like this:
+and then unit test must look like this:
 ```
 describe('my-directive', function() {
 
@@ -222,19 +222,28 @@ describe('my-directive', function() {
     beforeEach(function() {
       angular.mock.module('my-module');
 
-      angular.mock.inject(function($compile, $rootScope) {
+      angular.mock.inject(function($compile, $rootScope, $controller) {
         scope = $rootScope;
-        element = angular.element('<my-directive ></my-directive>');
+        element = angular.element('<my-directive demo-value-one="one" demo-value-two="two"></my-directive>');
         $compile(element)(scope);
         scope.$digest();
  
-        ctrl = element.controller('myDirective');
+        ctrl = $controller(
+                'myDirective', {
+                        myService: function() {},
+                        anotherService: function(){}
+                }, {
+                        demoValueOne: 'one',
+                        demoValueTwo: 'two
+                });
         
       });
     });
 
-    it('should have a controller', function() {
+    it('should have a controller with values binded on it', function() {
       expect(ctrl).toBeDefined();
+      expect(ctrl.demoValueOne).toBetruthy();
+      expect(ctrl.demoValueTwo).toBetruthy();
     });
 
   });
