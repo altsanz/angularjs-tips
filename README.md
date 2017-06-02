@@ -186,8 +186,10 @@ describe('Controller: myCtrl as vm', function() {
 
 When you have a directive created with a controller using controllerAs and BindToController syntax, in order to test controller methods you should better keep reading.
 
+**FIRST: Never do element.controller('directiveName')**, as controller won't have binded values.
+
 You have a directive created like this:
-```
+```javascript
 angular.module('whatever', []).directive('myDirective', function () {
   return {
     restrict: 'E',
@@ -214,7 +216,7 @@ angular.module('whatever', []).directive('myDirective', function () {
 ```
 
 and then unit test must look like this:
-```
+```javascript
 describe('my-directive', function() {
 
     var element, scope, ctrl;
