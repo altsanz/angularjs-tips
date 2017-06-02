@@ -231,7 +231,7 @@ describe('my-directive', function() {
         scope.$digest();
  
         ctrl = $controller(
-                'myDirective', {
+                'MyDirectiveCtrl', {
                         myService: function() {},
                         anotherService: function(){}
                 }, {
