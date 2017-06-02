@@ -236,7 +236,7 @@ describe('my-directive', function() {
                         anotherService: function(){}
                 }, {
                         demoValueOne: 'one',
-                        demoValueTwo: 'two
+                        demoValueTwo: 'two'
                 });
         
       });
