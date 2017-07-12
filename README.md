@@ -255,7 +255,7 @@ describe('my-directive', function() {
 
 When using httpBackend mock and expect it to not have been called, simply use the following line:
 
-```
+```js
 expect(httpBackend.flush).toThrow();
 ```
 
@@ -271,7 +271,7 @@ In other words, how I make $httpProvider to be available inside 'it' unit test b
 
 On beforeEach create new module with a name that doesn't collide with other modules you want to test.
 
-```
+```js
 beforeEach(function() {
     angular.module('componentWithConfig', [])
 })
@@ -279,7 +279,7 @@ beforeEach(function() {
 
 Then create a config block for this new module:
 
-```
+```js
 beforeEach(function() {
     angular.module('componentWithConfig', [])
 }).config(function() {});
@@ -287,7 +287,7 @@ beforeEach(function() {
 
 Then inject $httpProvider inside this custom config block and save reference, as we do for regular unit testing:
 
-```
+```js
     
 describe('Component logger', function() {    
     var httpProvider;
