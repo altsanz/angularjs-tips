@@ -319,11 +319,11 @@ Directives are like factories, so do like you always mock bricks. You have a mag
 ```js
 
 beforeEach(module('yourapp/test', function($provide){
-  $provide.factory('doSomethingDirective', function(){ return {}; });
+  $provide.factory('magicCounterDirective', function(){ return {}; });
 }));
 
 // Or using the shorthand sytax
-beforeEach(module('yourapp/test', { doSomethingDirective: {} ));
+beforeEach(module('yourapp/test', { magicCounterDirective: {} ));
 ```
 
 Props to [trodriges](https://stackoverflow.com/a/20951085/1306660).
