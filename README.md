@@ -306,6 +306,28 @@ describe('Component logger', function() {
 })
 ```
 
+### Unit testing components with child-components
+
+So you have a component or directive with some components on it's HTML. Imagine that child-component is another container so it interacts with services, and GUESS WHAT? On unit testing, those services are called, as child-components are rendered also.
+
+but, you are unit testing. **Unit** testing. YOU **UNIT**, DUDE. Best approach would be to mock'em all. Mock that child-component. 
+
+How you do that?
+
+Directives are like factories, so do like you always mock bricks. You have a magic-counter directive, then you do the following on beforeEach:
+
+```js
+
+beforeEach(module('yourapp/test', function($provide){
+  $provide.factory('doSomethingDirective', function(){ return {}; });
+}));
+
+// Or using the shorthand sytax
+beforeEach(module('yourapp/test', { doSomethingDirective: {} ));
+```
+
+Props to [trodriges](https://stackoverflow.com/a/20951085/1306660).
+
 
 ## AngularJS Internals
 
