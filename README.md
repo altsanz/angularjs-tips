@@ -342,3 +342,32 @@ There are basically three possible cases when the state of an application can ch
 - **Timeouts** - Asynchronous operations cause through timers that can possibly change the state of our application
 
 Source: _https://blog.thoughtram.io/angularjs/2015/01/14/exploring-angular-1.3-speed-up-with-applyAsync.html_
+
+### $onDestroy VS $scope.on('$destroy', fn())?
+
+There are 2 ways to define behaviour when destroying a scope, useful for removing listeners, using tear down methods. and so on.
+They might look similar but they are NOT.
+
+First one:
+
+```js
+function() {
+    [...]
+    this.$onDestroy = function() {}
+}
+```
+
+Is only called when scope where controller or component lives in is destroyed. ONLY in this case.
+So if from inside we do a $scope.$destroy()... $onDestroy won't be called.
+
+Second way:
+
+```js
+function() {
+    [...]
+    $scope.$on('$destroy', function() { [...] })
+}
+```
+    
+This is called when inner scope is destroyed. Why is this? Because before really destroying scope, a $destroy event is broadcasted, from this child $scope to the rest of child scopes. So ctrl.$onDestroy(), which lives in a higher level won't notice.
+
