@@ -7,6 +7,12 @@ Place where I put some of my angular tips, for my future me.
 
 ## Directives
 
+### Event listener: event.target vs event.currentTarget
+- **target** is whatever you **actually clicked on**. It can vary, as this can be within an element that the event was bound to.
+- **currentTarget** is the element you **actually bound the event to**. This will never change.
+
+Source: _http://joequery.me/code/event-target-vs-event-currenttarget-30-seconds/_
+
 ### Symbols in scope object
 
 1. "@"   (  Text binding / one-way binding )
