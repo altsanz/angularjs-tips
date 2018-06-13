@@ -377,3 +377,12 @@ function() {
     
 This is called when inner scope is destroyed. Why is this? Because before really destroying scope, a $destroy event is broadcasted, from this child $scope to the rest of child scopes. So ctrl.$onDestroy(), which lives in a higher level won't notice.
 
+### $digest vs $apply
+
+**scope.$digest()** will fire watchers on the current scope, and on all of its children, too.
+**scope.$apply** will evaluate passed function and run $rootScope.$digest().
+
+The first one is faster, as it needs to evaluate watchers for current scope and its children. The second one is slower, as it needs to evaluate watchers for$rootScope and all it's child scopes.
+
+Source _https://stackoverflow.com/questions/18697745/apply-vs-digest-in-directive-testing_
+
